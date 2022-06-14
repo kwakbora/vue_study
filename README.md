@@ -142,4 +142,98 @@ app.post('/api/account', (req, res) => {
 })
 ```
 
+### npm cookie parser 사용하기
+
+```bash
+npm install cookie-parser
+```
+
+그리고  API 소스를 넣어준다.
+
+```js
+cont cookieParser = require('cookie-parser');
+app.use(cookieParser());
+```
+
+그런다음 body 를 사용하면 된다.
+
+```javascript
+app.get('/api/account', (req, res) => {
+
+  if(req.cookies && req.cookies.account){
+    const member = JSON.parse(req.cookies.account);
+
+    if(member.id){
+      return res.send(member);  //쿠키값을 저장해 화면 새로고침을 막는다.
+    }
+  }
+  res.send(401);
+})
+```
+
+쿠키에 값을 저장해서 쓰게 되면 보안상 문제가 생길 수 있으니, 이를 해결하기 위해서
+
+JWT를 활용해보자.
+
+
+
+### JWT 사용하기
+
+```bash
+npm install jsonwebtoken
+```
+
+그리고  API 소스를 넣어준다.
+
+```javascript
+const jwt = require('jsonwebtoken')
+```
+
+```javascript
+app.get('/api/account', (req, res) => {
+  if(req.cookies && req.cookies.token){
+    jwt.verify(req.cookies.token, "abcedf1234567", (err,decoded)=>{
+      if(err){
+       return res.send(401)
+      }else{
+        res.send(decoded)
+      }
+    });
+    const member = JSON.parse(req.cookies.token);
+
+    if(member.id){
+      return res.send(member);  //쿠키값을 저장해 화면 새로고침을 막는다.
+    }
+  }
+  res.send(401);
+})
+
+app.post('/api/account', (req, res) => {
+  const loginId = req.body.loginId;
+  const loginPw = req.body.loginPw;
+
+  //console.log(loginId,loginPw)
+  const member = members.find(m=> m.loginId === loginId && m.loginPw === loginPw)
+  if(member){
+    const option = {
+      domain : "localhost",
+      path: "/",
+      httpOnly : true,
+    }
+    const token = jwt.sign({
+      id : member.id,
+      name : member.name,
+    },"abcedf1234567", { //암호화키
+      expiresIn : "10s", //만료시간
+      issuer : "boraslib",
+    });
+
+    res.cookie("token", token, option);
+    res.send(member);
+  }else{
+    res.send(404);
+  }
+
+})
+```
 
