@@ -113,4 +113,32 @@ module.exports = {
    -> ws: false 로 해결함.
 
 
+#### npm body parser 사용하기
+
+서버에서 front로 데이터 보낼때 req.body 가 필요한데,
+
+이때 다음과 같은 명령어를 사용하면 된다.
+
+```bash
+npm install body-parser
+```
+
+그리고  API 소스를 넣어준다.
+
+```js
+cont bodyParser = require('body-parser');
+app.use(bodyParser.json());
+```
+
+그런다음 body 를 사용하면 된다.
+
+```javascript
+app.post('/api/account', (req, res) => {
+  const loginId = req.body.loginId;
+  const loginPw = req.body.loginPw;
+  
+  console.log(loginId,loginPw)
+})
+```
+
 
