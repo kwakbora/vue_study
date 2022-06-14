@@ -92,7 +92,7 @@ package.json 과 같은 레벨에 vue.config.js 파일을 생성한뒤 아래 �
 module.exports = {
   devServer: {
     proxy: {
-      "/": {
+      "/api": {
         proxyRoot: true,
         target: 'http://localhost:3000',
         ws: false
@@ -106,7 +106,7 @@ module.exports = {
 
 1.  front에서 vue 실행하면 proxy 가 존재하지 않다고 port 연결을 해주지 않음.
 
-   -> "/" 로 텍스트 찾고 proxyRoot: true 해줬더니 해결됨.
+   -> proxyRoot: true 해줬더니 해결됨.
 
 2. WebSocket connection to 'ws://192.168.35.209:8080/ws' failed: Invalid frame header
 
