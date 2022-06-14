@@ -33,7 +33,7 @@ npm run serve //시작
 ```
 
 
-#### backend 만들기
+## backend 만들기
 
 ```bash
 mkdir backend (폴더이름) 생성하기
@@ -71,7 +71,7 @@ node .\api-server.js //localhost 생성
 
 
 
-#### backend 서버통신하기
+### backend 서버통신하기
 
 package.json 과 같은 레벨에 vue.config.js 파일을 생성한뒤 아래 소스를 입력한다.
 
@@ -101,7 +101,7 @@ module.exports = {
 
 
 
-#### axios 사용하기
+### axios 사용하기
 
 기존 프로젝트에서 axios로 서버와 통신 하기 위해서는 이를 node_modules에 설치해야한다. 이때 다음과 같은 명령어를 사용하면 된다.
 
