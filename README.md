@@ -83,7 +83,7 @@ npm install axios
 
 이후 /node_modules에 axios가 추가된 것을 확인할 수 있다.
 
-### proxy 사용하여 port 우회 요청하기
+### proxy 사용하기
 
 fornt 와 back 의 locallost 가 달라 요청 proxy를 이용하여 host 우회하여 요청함.
 package.json 과 같은 레벨에 vue.config.js 파일을 생성한뒤 아래 소스를 입력한다.
