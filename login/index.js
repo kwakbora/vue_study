@@ -10,6 +10,10 @@ app.use(express.static('dist'));
 public void updateUserStamp(@RequestBody UserDto User) {
     userService.updateUserStamp(User);
 }
+@PatchMapping("/api/account")
+public void updateUserStamp(@RequestBody UserDto User) {
+    userService.updateUserStamp(User);
+}
 const members = [
   {
     id:3,
