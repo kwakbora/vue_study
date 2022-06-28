@@ -53,7 +53,7 @@ app.post('/api/account', (req, res) => {
   if(member){
 
     const option = {
-      domain : "https://kwakbora.github.io/vue_study.github.io",
+      domain : "https://kwakbora.github.io/vue_study.github.io/login",
       path: "/",
       httpOnly : true,
     }
