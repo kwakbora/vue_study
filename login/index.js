@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const port = process.env.PORT
+const port = 3000
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
@@ -53,7 +53,7 @@ app.post('./api/account', (req, res) => {
   if(member){
 
     const option = {
-      domain : "https://kwakbora.github.io/vue_study.github.io",
+      domain : "https://kwakbora.github.io/vue_study.github.io/login",
       path: "/",
       httpOnly : true,
     }
