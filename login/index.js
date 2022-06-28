@@ -6,14 +6,7 @@ const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
 
 app.use(express.static('dist'));
-@PostMapping("/api/account")
-public void updateUserStamp(@RequestBody UserDto User) {
-    userService.updateUserStamp(User);
-}
-@PatchMapping("/api/account")
-public void updateUserStamp(@RequestBody UserDto User) {
-    userService.updateUserStamp(User);
-}
+
 const members = [
   {
     id:3,
