@@ -24,7 +24,7 @@ const members = [
 app.use(bodyParser.json())
 app.use(cookieParser())
 
-app.get('/api/account', (req, res) => {
+app.get('./api/account', (req, res) => {
 
   if(req.cookies && req.cookies.token){
     jwt.verify(req.cookies.token, "abcedf1234567", (err,decoded)=>{
@@ -43,7 +43,7 @@ app.get('/api/account', (req, res) => {
   res.send(401);
 })
 
-app.post('/api/account', (req, res) => {
+app.post('./api/account', (req, res) => {
   const loginId = req.body.loginId;
   const loginPw = req.body.loginPw;
 
@@ -53,7 +53,7 @@ app.post('/api/account', (req, res) => {
   if(member){
 
     const option = {
-      domain : "https://kwakbora.github.io/vue_study.github.io/login/dist",
+      domain : "https://kwakbora.github.io/vue_study.github.io/login",
       path: "/",
       httpOnly : true,
     }
@@ -77,7 +77,7 @@ app.listen(port, () => {
   console.log(`Example app listening at port ${port}`)
 })
 
-app.delete('/api/account', (req, res) => {
+app.delete('./api/account', (req, res) => {
   if(req.cookie && req.cookie.token){
     res.clearCookie("token");
   }
