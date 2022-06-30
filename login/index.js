@@ -5,7 +5,7 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
 
-app.use(express.static('public'));
+app.use(express.static('dist'));
 
 const members = [
   {
