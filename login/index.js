@@ -28,11 +28,19 @@ app.get('/api/account', (req, res) => {
 
   if(req.cookies && req.cookies.token){
     jwt.verify(req.cookies.token, "abcedf1234567", (err,decoded)=>{
-      if(err){
-       return res.send(401)
+      if (err.name === 'TokenExpiredError') { // 유효기간 초과
+        return res.status(419).json({
+          code: 419,
+          message: '토큰이 만료되었습니다',
+        });
       }else{
         res.send(decoded)
       }
+      return res.status(401).json({
+        code: 401,
+        message: '유효하지 않은 토큰입니다',
+      });
+
     });
     const member = JSON.parse(req.cookies.token);
 
@@ -40,7 +48,7 @@ app.get('/api/account', (req, res) => {
       return res.send(member);  //쿠키값을 저장해 화면 새로고침을 막는다.
     }
   }
-  res.send(401);
+  //res.send(406);
 })
 
 app.post('/api/account', (req, res) => {
@@ -60,12 +68,19 @@ app.post('/api/account', (req, res) => {
     const token = jwt.sign({
       id : member.id,
       name : member.name,
-    },"abcedf1234567", { //암호화키
+    }, process.env.JWT_SECRET, { //암호화키
       expiresIn : "10s", //만료시간
       issuer : "boraslib",
     });
 
-    res.cookie("token", token, option);
+     res.cookie({
+      code: 200,
+      option,
+      message: '토큰이 발급되었습니다',
+      token,
+    });
+
+    //res.cookie("token", token, option);
     res.send(member);
   }else{
     res.send(404);
