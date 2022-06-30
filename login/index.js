@@ -6,7 +6,7 @@ const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
 
 app.use(express.static('dist'));
-
+console.log('server started '+ port);
 const members = [
   {
     id:3,
@@ -25,7 +25,9 @@ app.use(bodyParser.json())
 app.use(cookieParser())
 
 app.get('/', (req, res) => {
-res.sendFile(path.join(__dirname, '../dist', 'index.html'));
+
+  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
+
   if(req.cookies && req.cookies.token){
     jwt.verify(req.cookies.token, "abcedf1234567", (err,decoded)=>{
       if(err){
