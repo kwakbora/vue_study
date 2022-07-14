@@ -54,7 +54,7 @@ npm install express
 ```bash
 const express = require('express')
 const app = express()
-const port = 3000
+const port = process.env.PORT || 3000
 
 app.get('/', (req, res) => {
   res.send('hello world!');
@@ -237,3 +237,45 @@ app.post('/api/account', (req, res) => {
 })
 ```
 
+### 배포하기
+
+frontend폴더에 vue.config.js 파일을 생성한다.
+
+```js
+const { defineConfig } = require('@vue/cli-service')
+module.exports = defineConfig({
+  transpileDependencies: true
+})
+const path = require("path");
+
+module.exports = {
+  outputDir: path.resolve(__dirname, "../backend/dist"),
+  publicPath: './',
+  devServer: {
+    proxy: {
+      "/": {
+        proxyRoot: true,
+        target: 'http://localhost:3000',
+        changeOrigin: true,
+        ws: false
+      }
+    }
+  }
+```
+
+outputDir  로 빌드할 폴더를 지정해준다.
+
+가비아에서 도메인,node.js 호스팅을 구매 후 FTP에  node_modules 폴더를 제외하고 올려준다.
+
+그리고 Termius 다운받아 구매한 호스팅을 연결해준다.
+
+1. ls (폴더확인) / ls -al (폴더 전체확인)
+2. cd login(폴더지정)
+3. npm install (node 를 설치해준다)
+4. node index.js 
+
+**** Termius 를 끄면 화면을 확인 할수 없기 때문에 아래처럼 설치해 줘야 한다.**
+
+1. npm install pm2 -g (pm2 라는 node를 글로벌하게 설치)
+2. pm2 start index.js 
+3. pm2 ls (현재실행 중인 작업 확인 가능)
