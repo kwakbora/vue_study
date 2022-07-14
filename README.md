@@ -49,7 +49,7 @@ node js express 를 설치 한다.
 npm install express
 ```
 
-파일을 새로 생성한뒤 ex) api-server.js 을 넣어준다.
+파일을 새로 생성한뒤 ex) index.js 을 넣어준다.
 
 ```bash
 const express = require('express')
@@ -66,7 +66,7 @@ app.listen(port, () => {
 ```
 
 ```bash
-node .\api-server.js //localhost 생성
+node .\index.js //localhost 생성
 ```
 
 
