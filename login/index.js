@@ -4,8 +4,11 @@ const port = process.env.PORT || 3000
 const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const jwt = require('jsonwebtoken')
+const cors = require('cors');
 
 app.use(express.static('dist'));
+app.use(cors());
+
 console.log('server started '+ port);
 const members = [
   {
@@ -26,10 +29,10 @@ app.use(cookieParser())
 
 app.get('/', (req, res) => {
 
-  res.sendFile(path.join(__dirname, '../dist', 'index.html'));
+  const token = req.headers['x-access-token'] || req.cookies.token;
 
-  if(req.cookies && req.cookies.token){
-    jwt.verify(req.cookies.token, "abcedf1234567", (err,decoded)=>{
+  if(req.cookies && token){
+    jwt.verify(token, "abcedf1234567", (err,decoded)=>{
       if(err){
        return res.send(401).json({
           code: 401,
@@ -39,7 +42,7 @@ app.get('/', (req, res) => {
         res.send(decoded)
       }
     });
-    const member = JSON.parse(req.cookies.token);
+    const member = JSON.parse(token);
 
     if(member.id){
       return res.send(member);  //쿠키값을 저장해 화면 새로고침을 막는다.
@@ -85,7 +88,7 @@ app.listen(port, () => {
   console.log(`Example app listening at port ${port}`)
 })
 
-app.delete('/', (req, res) => {
+app.delete('/users/:id', (req, res) => {
   if(req.cookie && req.cookie.token){
     res.clearCookie("token");
   }
